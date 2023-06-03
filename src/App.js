@@ -6,37 +6,31 @@ import Form from './Components/Form';
 import Navbar from './Components/Navbar';
 import { useDispatch, useSelector } from 'react-redux';
 import { setItems } from './API/todoSlice';
+import Home from './Pages/Home';
+import {BrowserRouter as Router,Routes,Route, Navigate} from 'react-router-dom'
+import Signin from './Pages/Signin';
+import Register from './Pages/Register'
 
 function App() {
-  const stuff= useSelector((state)=>state.todos.value)
-  console.log('REDUX STUFF',stuff)
-  const [data,setData]=useState(['1','2','3'])
-  const dispatch=useDispatch()
+  const user=useSelector((state)=>state.users.value)
 
-  useEffect(()=>{
-    const fetchData=async()=>{
-      const response= await fetch('https://clownfish-garment.cyclic.app/api/todos')
-      const items= await response.json()
-      
-      if(!response.ok){
-        console.log('RESPONSES are',response)
-      }
-      else{
-        console.log('items  are',items)
-        dispatch(setItems(items))
-      }
-
-    }
-    fetchData()  
-  },[])
   return (
     <div className="App">
       <div className='bg-teal-400 h-[700px]'>
-      <Navbar/>
-       <Form/>
-       {stuff.map((item)=>(
-        <Items item={item}/>
-       ))}
+        <Router>
+          <Navbar/>
+          <Routes>
+          
+            <Route path='/' element={user?<Home/>:<Navigate to='/register'/>}/>
+            <Route path='/signin' element={!user?<Signin/>:<Navigate to='/'/>}/>
+            <Route path='/register' element={!user?<Register/>:<Navigate to='/'/>}/>
+
+          </Routes>
+
+        </Router>
+ 
+
+     
 
       </div>
      

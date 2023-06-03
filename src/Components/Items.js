@@ -1,18 +1,19 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { removeItem } from '../API/todoSlice'
 
 function Items({item}) {
+    const user=useSelector((state)=>state.users.value)
     const dispatch=useDispatch()
 
     const deleteHandler=async()=>{ 
         dispatch(removeItem(item._id))
 
-        const response= await fetch('https://clownfish-garment.cyclic.app/api/todos/' +item._id,{
+        const response= await fetch('http://localhost:5000/api/todos/' +item._id,{
           method:'DELETE',
+          headers:{'Authorization':`Bearer ${user.token}`}
         })
         const json=await response.json()
-        console.log('you deleted',json)
     }
   return (
     <div className=

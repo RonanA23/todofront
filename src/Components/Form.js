@@ -1,21 +1,22 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addItem } from '../API/todoSlice'
 
 function Form() {
+  
+  const user= useSelector((state)=>state.users.value)
   const dispatch=useDispatch()
   const[newtodo,setNewtodo]=useState('')
   const[error,setError]=useState('')
   const submitHandler=async()=>{
-    const response=await fetch('https://clownfish-garment.cyclic.app/api/todos/',{
+    const response=await fetch('http://localhost:5000/api/todos/',{
       method:'POST',
       body:JSON.stringify({title:newtodo}),
-      headers:{'Content-Type':'application/json'}
+      headers:{'Content-Type':'application/json',
+    'Authorization':`Bearer ${user.token}`}
     })
-    console.log('response is',response)
 
     const json=response.json()
-    console.log('json is',json)
     if(!response.ok){
       setError(json.error)
     }
@@ -23,7 +24,6 @@ function Form() {
       setError(null)
     }
     dispatch(addItem({title:newtodo}))
-    console.log('New tod o is',json)
     }
   return (
     <div className='bg-green-600 mx-auto w-[300px] m-2 p-4 rounded-lg'>
