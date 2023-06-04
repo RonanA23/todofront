@@ -3,6 +3,7 @@ import Form from '../Components/Form'
 import Items from '../Components/Items'
 import { useDispatch, useSelector } from 'react-redux'
 import { setItems } from '../API/todoSlice'
+import { addUser } from '../API/userSlice'
 
 function Home() {
   //https://clownfish-garment.cyclic.app/api/todos
@@ -10,11 +11,18 @@ function Home() {
   const user=useSelector((state)=>state.users.value)
   const stuff= useSelector((state)=>state.todos.value)
   const dispatch=useDispatch()
+
+  useEffect(()=>{
+    const juser=JSON.parse(localStorage.getItem('user'))
+    if(juser){
+      dispatch(addUser(juser))
+      
+    }
+  },[])
   
   useEffect(()=>{
     const fetchData=async()=>{
-      console.log('useeffect user',user)
-      console.log('useeffect user.token',user.token)
+      console.log('user is',user)
       const response= await fetch('http://localhost:5000/api/todos/',{
         headers:{'Authorization':`Bearer ${user.token}`}
       })
@@ -23,20 +31,19 @@ function Home() {
       if(!response.ok){
         console.log('Error',response)
       }
-      else{
-        console.log('ITEMS',items)
+      else{    
         dispatch(setItems(items))
+        console.log('fetching once')
       }
     }
     if(user){
     fetchData()}  
-  },[dispatch,user])
+  },[user])
 
  
 
   return (
     <div>
-        {user ?(<p className='bg-red-700 w-[200px] h-8 text-white font-bold'>{user.email}</p>):(<p>no user</p>)}
          <Form/>
        {stuff?.map((item,i)=>(
         <Items key={i} item={item}/>

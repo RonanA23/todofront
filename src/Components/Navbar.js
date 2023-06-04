@@ -10,18 +10,6 @@ function Navbar() {
   const dispatch=useDispatch()
   const user= useSelector((state)=>state.users.value)
 
-  useEffect(()=>{
-    const user=JSON.parse(localStorage.getItem('user'))
-    if(user){
-      dispatch(addUser(user))
-      
-    }
-    console.log('user email in navbar',user?.email)
-  },[])
-
- 
-  
- 
   const {logout}=useLogout()
 
   const logoutHandler=()=>{
@@ -30,9 +18,9 @@ function Navbar() {
   }
   return (
     <div className='bg-blue-400 w-full flex justify-between items-center text-white font-bold text-2xl h-12 px-4 '>
-        <p>
-          To DO List
-        </p>
+        <b className='text-gray-600 font-bold'>
+          TO DO LIST
+        </b>
         <div className='flex justify-between items-center'>
           {!user &&     <div className='flex justify-between'>
           <Link to='register'>
