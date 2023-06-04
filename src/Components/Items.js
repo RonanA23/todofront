@@ -9,7 +9,7 @@ function Items({item}) {
     const deleteHandler=async()=>{ 
         dispatch(removeItem(item._id))
 
-        const response= await fetch('http://localhost:5000/api/todos/' +item._id,{
+        const response= await fetch('https://clownfish-garment.cyclic.app/api/todos/' +item._id,{
           method:'DELETE',
           headers:{'Authorization':`Bearer ${user.token}`}
         })

@@ -23,7 +23,7 @@ function Home() {
   useEffect(()=>{
     const fetchData=async()=>{
       console.log('user is',user)
-      const response= await fetch('http://localhost:5000/api/todos/',{
+      const response= await fetch('https://clownfish-garment.cyclic.app/api/todos/',{
         headers:{'Authorization':`Bearer ${user.token}`}
       })
       const items= await response.json()
