@@ -11,7 +11,7 @@ export const useSignup=()=>{
         setIsLoading(true)
         setError(null)
 
-        const response=await fetch('https://clownfish-garment.cyclic.app/api/user/register',{
+        const response=await fetch('https://mushy-handkerchief-lamb.cyclic.app/api/user/register',{
             method:'POST',
             headers:{'Content-Type': 'application/json'},
             body:JSON.stringify({email,password})

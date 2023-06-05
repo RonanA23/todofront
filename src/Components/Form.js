@@ -9,7 +9,7 @@ function Form() {
   const[newtodo,setNewtodo]=useState('')
   const[error,setError]=useState('')
   const submitHandler=async()=>{
-    const response=await fetch('https://clownfish-garment.cyclic.app/api/todos/',{
+    const response=await fetch('https://mushy-handkerchief-lamb.cyclic.app/api/todos/',{
       method:'POST',
       body:JSON.stringify({title:newtodo}),
       headers:{'Content-Type':'application/json',
